@@ -176,6 +176,18 @@ def generate_offline_output(plan_text: str, objective: str) -> str:
     return textwrap.dedent(template)
 
 
+def determine_output_path(plan_path: str, output_dir: Optional[str]) -> str:
+    """Return the destination path for the optimized plan.
+
+    If ``output_dir`` is ``None`` we place the file in the当前工作目录,
+    满足“保存至本地工作文件夹”需求。"""
+
+    target_dir = output_dir or os.getcwd()
+    os.makedirs(target_dir, exist_ok=True)
+    base_name = os.path.splitext(os.path.basename(plan_path))[0]
+    return os.path.join(target_dir, f"{base_name}_optimized.md")
+
+
 def run(
     plan_path: str,
     query: str,
@@ -183,6 +195,7 @@ def run(
     objective: str,
     api_key: Optional[str],
     offline: bool = False,
+    output_dir: Optional[str] = None,
 ) -> None:
     if not os.path.exists(plan_path):
         raise FileNotFoundError(f"计划文件不存在: {plan_path}")
@@ -210,7 +223,7 @@ def run(
         prompt = build_prompt(plan_text=plan_text, results=search_results, objective=objective)
         gpt_output = call_gpt(config, prompt)
 
-    output_path = f"{plan_path.rsplit('.', 1)[0]}_optimized.md"
+    output_path = determine_output_path(plan_path, output_dir)
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(gpt_output)
 
@@ -239,6 +252,10 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="无需网络与OpenAI依赖的离线模式, 将生成启发式建议",
     )
+    parser.add_argument(
+        "--output-dir",
+        help="保存迭代计划的目标文件夹, 默认写入当前工作目录",
+    )
     return parser.parse_args()
 
 
@@ -251,4 +268,5 @@ if __name__ == "__main__":
         objective=args.objective,
         api_key=args.api_key,
         offline=args.offline,
+        output_dir=args.output_dir,
     )

@@ -23,7 +23,7 @@
        --query "sepsis precision medicine doctoral proposal" \
        --model gpt-4o-mini
    ```
-   生成的优化建议会保存为 `plans/emergency_phd_plan_optimized.md` 并打印在终端，便于迭代完善研究计划。
+   生成的优化建议会保存到当前工作目录，例如 `./emergency_phd_plan_optimized.md`，并打印在终端，便于迭代完善研究计划。
 
 > 如需针对影像计划进行迭代，可将 `--plan` 参数替换为 `plans/imaging_phd_plan.md` 并调整检索关键词。
 
@@ -34,4 +34,13 @@ python tools/plan_optimizer.py \
     --plan plans/emergency_phd_plan.md \
     --query "sepsis precision medicine doctoral proposal" \
     --offline
+```
+
+若希望将迭代后的计划统一保存到特定目录，可通过 `--output-dir` 参数显式指定，例如：
+
+```bash
+python tools/plan_optimizer.py \
+    --plan plans/imaging_phd_plan.md \
+    --query "glioma radiomics doctoral proposal" \
+    --output-dir iterations
 ```
