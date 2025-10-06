@@ -27,6 +27,7 @@ import argparse
 import os
 import textwrap
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Iterable, List, Optional
 
 import importlib
@@ -176,16 +177,32 @@ def generate_offline_output(plan_text: str, objective: str) -> str:
     return textwrap.dedent(template)
 
 
+DEFAULT_WINDOWS_OUTPUT_DIR = Path("D:/work/2025hxczqn")
+
+
+def resolve_output_directory(output_dir: Optional[str]) -> Path:
+    """Resolve the directory used to persist优化后的计划.
+
+    - 当 ``output_dir`` 提供时优先使用, 支持 ``~`` 等缩写。
+    - Windows 环境默认写入 ``D:\\work\\2025hxczqn`` 符合用户指定目录。
+    - 其它平台仍旧回落至当前工作目录, 保持向后兼容。
+    """
+
+    if output_dir:
+        target = Path(output_dir).expanduser()
+    elif os.name == "nt":
+        target = DEFAULT_WINDOWS_OUTPUT_DIR
+    else:
+        target = Path.cwd()
+
+    target.mkdir(parents=True, exist_ok=True)
+    return target
+
+
 def determine_output_path(plan_path: str, output_dir: Optional[str]) -> str:
-    """Return the destination path for the optimized plan.
-
-    If ``output_dir`` is ``None`` we place the file in the当前工作目录,
-    满足“保存至本地工作文件夹”需求。"""
-
-    target_dir = output_dir or os.getcwd()
-    os.makedirs(target_dir, exist_ok=True)
     base_name = os.path.splitext(os.path.basename(plan_path))[0]
-    return os.path.join(target_dir, f"{base_name}_optimized.md")
+    target_dir = resolve_output_directory(output_dir)
+    return str(target_dir / f"{base_name}_optimized.md")
 
 
 def run(

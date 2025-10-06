@@ -44,3 +44,5 @@ python tools/plan_optimizer.py \
     --query "glioma radiomics doctoral proposal" \
     --output-dir iterations
 ```
+
+在 Windows 环境下，如果未显式提供 `--output-dir`，脚本会自动将优化结果保存至 `D:\work\2025hxczqn`，以满足“将两份最终迭代的研究计划保存在本地工作文件夹”这一需求；在其它平台则仍默认使用当前工作目录。
