@@ -26,3 +26,12 @@
    生成的优化建议会保存为 `plans/emergency_phd_plan_optimized.md` 并打印在终端，便于迭代完善研究计划。
 
 > 如需针对影像计划进行迭代，可将 `--plan` 参数替换为 `plans/imaging_phd_plan.md` 并调整检索关键词。
+
+如当前环境无法联网或缺少 OpenAI/requests 依赖，可使用离线模式快速获得启发式建议：
+
+```bash
+python tools/plan_optimizer.py \
+    --plan plans/emergency_phd_plan.md \
+    --query "sepsis precision medicine doctoral proposal" \
+    --offline
+```

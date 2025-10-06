@@ -29,14 +29,20 @@ import textwrap
 from dataclasses import dataclass
 from typing import Iterable, List, Optional
 
-import requests
+import importlib
+import importlib.util
 
-try:
-    from openai import OpenAI
-except ImportError as exc:  # pragma: no cover - 用于提醒用户安装依赖
-    raise SystemExit(
-        "需要安装 openai Python SDK (pip install openai>=1.0)."
-    ) from exc
+requests_spec = importlib.util.find_spec("requests")
+if requests_spec is not None:
+    requests = importlib.import_module("requests")
+else:  # pragma: no cover - 运行时提示用户安装依赖
+    requests = None
+
+openai_spec = importlib.util.find_spec("openai")
+if openai_spec is not None:
+    OpenAI = importlib.import_module("openai").OpenAI
+else:  # pragma: no cover - 运行时提示用户安装依赖
+    OpenAI = None
 
 
 DUCKDUCKGO_URL = "https://duckduckgo.com/html/"
@@ -54,6 +60,11 @@ def fetch_duckduckgo_results(query: str, max_results: int = 5) -> List[SearchRes
 
     为避免依赖复杂解析库, 这里采用 DuckDuckGo 简洁 HTML 接口并做轻量解析。
     """
+
+    if requests is None:
+        raise ModuleNotFoundError(
+            "缺少 requests 依赖, 可执行 'pip install requests' 或使用 --offline 模式。"
+        )
 
     params = {"q": query, "kl": "wt-wt"}
     headers = {"User-Agent": "Mozilla/5.0 (ResearchPlanOptimizer)"}
@@ -128,6 +139,11 @@ def build_prompt(plan_text: str, results: Iterable[SearchResult], objective: str
 def call_gpt(config: GPTInteractionConfig, prompt: str) -> str:
     """调用OpenAI GPT接口."""
 
+    if OpenAI is None:
+        raise ModuleNotFoundError(
+            "缺少 openai 依赖, 可执行 'pip install openai>=1.0' 或使用 --offline 模式。"
+        )
+
     client = OpenAI(api_key=config.api_key)
     response = client.responses.create(
         model=config.model,
@@ -138,26 +154,61 @@ def call_gpt(config: GPTInteractionConfig, prompt: str) -> str:
     return response.output_text
 
 
-def run(plan_path: str, query: str, model: str, objective: str, api_key: Optional[str]) -> None:
+def generate_offline_output(plan_text: str, objective: str) -> str:
+    """在无法访问外部服务时, 基于简单启发式生成建议."""
+
+    headings: List[str] = []
+    for line in plan_text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("#"):
+            headings.append(stripped.lstrip("# "))
+
+    headings_preview = "、".join(headings[:5]) or "(未检测到标题)"
+
+    suggestions = [
+        "强化数据治理与质量控制流程, 明确数据溯源与共享机制。",
+        "在方法部分加入可复现性计划, 指定评估指标与开源策略。",
+        "规划跨学科合作资源, 对接潜在临床或工程伙伴。",
+    ]
+
+    template = f"""## 离线优化建议\n\n### 关键优化建议\n1. {suggestions[0]}\n2. {suggestions[1]}\n3. {suggestions[2]}\n\n### 修订参考草案\n沿用原有章节结构 ({headings_preview})，针对“{objective}”目标：\n- 在研究背景中补充对最新政策与指南的对照分析。\n- 在技术路线章节加入实验设计表格与关键里程碑。\n- 在临床转化/推广章节说明伦理合规、数据安全与可持续运营。\n\n### 待进一步查证\n- 核实当前数据资源的授权范围与外部合作限制。\n- 更新近一年高影响力期刊中的相关研究以避免同质化。\n- 对国内外资助项目或多中心协作机会进行调研。\n"""
+
+    return textwrap.dedent(template)
+
+
+def run(
+    plan_path: str,
+    query: str,
+    model: str,
+    objective: str,
+    api_key: Optional[str],
+    offline: bool = False,
+) -> None:
     if not os.path.exists(plan_path):
         raise FileNotFoundError(f"计划文件不存在: {plan_path}")
 
     with open(plan_path, "r", encoding="utf-8") as f:
         plan_text = f.read()
 
-    print("[INFO] Fetching web references...")
-    search_results = fetch_duckduckgo_results(query)
+    search_results: List[SearchResult] = []
 
-    print("[INFO] Building prompt and contacting GPT...")
-    config = GPTInteractionConfig(
-        model=model,
-        api_key=api_key or os.environ.get("OPENAI_API_KEY", ""),
-    )
-    if not config.api_key:
-        raise EnvironmentError("未提供 OpenAI API Key, 请通过环境变量或参数设置。")
+    if offline:
+        print("[INFO] Offline 模式开启, 跳过网络检索与GPT调用。")
+        gpt_output = generate_offline_output(plan_text, objective)
+    else:
+        print("[INFO] Fetching web references...")
+        search_results = fetch_duckduckgo_results(query)
 
-    prompt = build_prompt(plan_text=plan_text, results=search_results, objective=objective)
-    gpt_output = call_gpt(config, prompt)
+        print("[INFO] Building prompt and contacting GPT...")
+        config = GPTInteractionConfig(
+            model=model,
+            api_key=api_key or os.environ.get("OPENAI_API_KEY", ""),
+        )
+        if not config.api_key:
+            raise EnvironmentError("未提供 OpenAI API Key, 请通过环境变量或参数设置。")
+
+        prompt = build_prompt(plan_text=plan_text, results=search_results, objective=objective)
+        gpt_output = call_gpt(config, prompt)
 
     output_path = f"{plan_path.rsplit('.', 1)[0]}_optimized.md"
     with open(output_path, "w", encoding="utf-8") as f:
@@ -183,6 +234,11 @@ def parse_args() -> argparse.Namespace:
         help="OpenAI 模型名称 (例如 gpt-4o-mini, gpt-4.1 等)",
     )
     parser.add_argument("--api-key", help="OpenAI API Key, 优先级高于环境变量")
+    parser.add_argument(
+        "--offline",
+        action="store_true",
+        help="无需网络与OpenAI依赖的离线模式, 将生成启发式建议",
+    )
     return parser.parse_args()
 
 
@@ -194,4 +250,5 @@ if __name__ == "__main__":
         model=args.model,
         objective=args.objective,
         api_key=args.api_key,
+        offline=args.offline,
     )
