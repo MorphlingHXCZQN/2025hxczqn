@@ -1,0 +1,13 @@
+{
+  "offline_mode": true,
+  "output_root": "D/计划",
+  "queries": [
+    {
+      "name": "esophageal_imaging",
+      "keywords": "\"esophageal cancer\" (MRI OR \"computed tomography\") (cT OR staging)",
+      "years": [2020, 2024],
+      "modalities": ["MRI", "CT"],
+      "sources": ["pubmed", "google_scholar"]
+    }
+  ]
+}

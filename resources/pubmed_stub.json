@@ -1,0 +1,30 @@
+{
+  "esophageal_imaging": [
+    {
+      "title": "Multiparametric MRI radiomics predicts neoadjuvant response in esophageal squamous cell carcinoma",
+      "authors": ["Li H", "Zhang Q", "Chen Y"],
+      "year": 2022,
+      "journal": "European Radiology",
+      "doi": "10.1007/s00330-022-08510-1",
+      "study_type": "Prospective cohort",
+      "sample_size": "n=86",
+      "imaging_modality": ["MRI", "DWI"],
+      "key_findings": "Baseline multiparametric radiomics combined with clinical stage improved prediction of pathologic complete response to chemoradiotherapy.",
+      "access_type": "open_access",
+      "link": "https://example.org/doi/10.1007/s00330-022-08510-1"
+    },
+    {
+      "title": "Deep learning fusion of CT and MRI for cT staging in esophageal adenocarcinoma",
+      "authors": ["Garcia M", "Khan S", "Patel R"],
+      "year": 2021,
+      "journal": "Radiotherapy and Oncology",
+      "doi": "10.1016/j.radonc.2021.04.015",
+      "study_type": "Retrospective multicenter",
+      "sample_size": "n=142",
+      "imaging_modality": ["CT", "MRI"],
+      "key_findings": "Cross-modality attention network reduced staging errors versus radiologist assessment by 18%.",
+      "access_type": "restricted",
+      "link": "https://example.org/doi/10.1016/j.radonc.2021.04.015"
+    }
+  ]
+}

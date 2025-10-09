@@ -1,0 +1,30 @@
+{
+  "esophageal_imaging": [
+    {
+      "title": "Hybrid MRI-CT radiomics nomogram for recurrence risk in locally advanced esophageal cancer",
+      "authors": ["Wang L", "Sun P", "Huang J"],
+      "year": 2023,
+      "journal": "Frontiers in Oncology",
+      "doi": "10.3389/fonc.2023.012345",
+      "study_type": "Radiomics nomogram study",
+      "sample_size": "n=120",
+      "imaging_modality": ["MRI", "CT"],
+      "key_findings": "Combined MRI texture and CT shape descriptors improved recurrence prediction AUC to 0.87.",
+      "access_type": "open_access",
+      "link": "https://example.org/articles/10.3389/fonc.2023.012345"
+    },
+    {
+      "title": "Transformer-based multimodal imaging model for esophageal cancer survival",
+      "authors": ["Singh A", "Ono K"],
+      "year": 2020,
+      "journal": "Artificial Intelligence in Medicine",
+      "doi": "10.1016/j.artmed.2020.101999",
+      "study_type": "Deep learning survival analysis",
+      "sample_size": "n=98",
+      "imaging_modality": ["CT", "MRI"],
+      "key_findings": "Temporal fusion of longitudinal CT and MRI scans outperformed Cox baselines by 9% C-index.",
+      "access_type": "restricted",
+      "link": "https://example.org/science/article/10.1016/j.artmed.2020.101999"
+    }
+  ]
+}
