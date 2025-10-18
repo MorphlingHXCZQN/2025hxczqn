@@ -2,3 +2,19 @@ __pycache__/
 .ipynb_checkpoints/
 .DS_Store
 .env
+D/work2/
+data/**
+!data/.gitkeep
+!data/README.md
+outputs/**
+!outputs/.gitkeep
+!outputs/README.md
+# Generated binaries (ensure PRs stay text-only)
+*.doc
+*.docx
+*.pdf
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+*.zip
