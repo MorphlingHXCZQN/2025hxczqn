@@ -18,7 +18,7 @@ def test_execute_pipeline(tmp_path):
     patched_config.write_text(adjusted, encoding="utf-8")
 
     results = execute_pipeline(patched_config, output_root=tmp_path)
-    assert len(results) == 4
+    assert len(results) == 10
 
     summary_csv = tmp_path / "data" / "processed" / "literature_summary.csv"
     assert summary_csv.exists()
@@ -30,3 +30,8 @@ def test_execute_pipeline(tmp_path):
 
     word_doc = tmp_path / "文献自动总结.docx"
     assert word_doc.exists()
+
+    iteration_log = tmp_path / "研究方案迭代日志.md"
+    final_plan = tmp_path / "研究方案最终稿.md"
+    assert iteration_log.exists()
+    assert final_plan.exists()

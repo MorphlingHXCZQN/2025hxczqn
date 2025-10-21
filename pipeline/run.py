@@ -10,6 +10,7 @@ from typing import Dict, Iterable, List
 from .config import PipelineConfig
 from .downloader import OutputManager
 from .google_scholar import GoogleScholarClient
+from .iteration import IterationPlanner
 from .pubmed import PubMedClient
 from .search import BaseClient, SearchResult, SearchRunner
 from .summarizer import Summarizer
@@ -51,10 +52,15 @@ def execute_pipeline(
     summary_markdown = summarizer.write_markdown(aggregated)
     summary_docx = summarizer.write_docx(aggregated)
 
+    planner = IterationPlanner(config.output_root, iterations=config.iterations)
+    iteration_output = planner.run(aggregated)
+
     print(f"Raw outputs written to: {manager.raw_root}")
     print(f"Tabular summary: {summary_path}")
     print(f"Markdown summary: {summary_markdown}")
     print(f"Word summary: {summary_docx}")
+    print(f"Iteration log: {iteration_output.log_path}")
+    print(f"Final research plan: {iteration_output.final_plan_path}")
     return aggregated
 
 

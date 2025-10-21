@@ -11,7 +11,8 @@
       "imaging_modality": ["MRI", "CT"],
       "key_findings": "Combined MRI texture and CT shape descriptors improved recurrence prediction AUC to 0.87.",
       "access_type": "open_access",
-      "link": "https://example.org/articles/10.3389/fonc.2023.012345"
+      "link": "https://example.org/articles/10.3389/fonc.2023.012345",
+      "citations": 95
     },
     {
       "title": "Transformer-based multimodal imaging model for esophageal cancer survival",
@@ -24,7 +25,50 @@
       "imaging_modality": ["CT", "MRI"],
       "key_findings": "Temporal fusion of longitudinal CT and MRI scans outperformed Cox baselines by 9% C-index.",
       "access_type": "restricted",
-      "link": "https://example.org/science/article/10.1016/j.artmed.2020.101999"
+      "link": "https://example.org/science/article/10.1016/j.artmed.2020.101999",
+      "citations": 184
+    },
+    {
+      "title": "Federated learning of cross-hospital esophageal cancer imaging",
+      "authors": ["Zhang Y", "Delingette H", "Liu J"],
+      "year": 2022,
+      "journal": "Medical Image Analysis",
+      "doi": "10.1016/j.media.2022.102359",
+      "study_type": "Federated learning study",
+      "sample_size": "n=540",
+      "imaging_modality": ["CT", "MRI"],
+      "key_findings": "Secure aggregation of 7 hospitals yielded robust staging models without data centralization.",
+      "access_type": "open_access",
+      "link": "https://example.org/science/article/10.1016/j.media.2022.102359",
+      "citations": 156
+    },
+    {
+      "title": "Graph neural networks integrating endoscopy and imaging for esophageal cancer",
+      "authors": ["Hernandez D", "Wu L", "Kawano T"],
+      "year": 2021,
+      "journal": "IEEE Transactions on Medical Imaging",
+      "doi": "10.1109/TMI.2021.3099999",
+      "study_type": "Graph learning pipeline",
+      "sample_size": "n=210",
+      "imaging_modality": ["CT", "MRI", "Endoscopy"],
+      "key_findings": "Multimodal graph fusion improved nodal staging accuracy by 12 percentage points.",
+      "access_type": "restricted",
+      "link": "https://example.org/doi/10.1109/TMI.2021.3099999",
+      "citations": 132
+    },
+    {
+      "title": "Self-supervised contrastive learning for low-resource esophageal MRI",
+      "authors": ["Kobayashi R", "Chen L"],
+      "year": 2024,
+      "journal": "Medical Physics",
+      "doi": "10.1002/mp.16321",
+      "study_type": "Self-supervised learning study",
+      "sample_size": "n=76",
+      "imaging_modality": ["MRI"],
+      "key_findings": "Contrastive pretraining boosted downstream segmentation Dice by 7% on limited labels.",
+      "access_type": "restricted",
+      "link": "https://example.org/doi/10.1002/mp.16321",
+      "citations": 58
     }
   ]
 }

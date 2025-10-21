@@ -18,7 +18,8 @@
     "key_findings": "Baseline multiparametric radiomics combined with clinical stage improved prediction of pathologic complete response to chemoradiotherapy.",
     "access_type": "open_access",
     "source": "pubmed",
-    "link": "https://example.org/doi/10.1007/s00330-022-08510-1"
+    "link": "https://example.org/doi/10.1007/s00330-022-08510-1",
+    "citations": 128
   },
   {
     "title": "Deep learning fusion of CT and MRI for cT staging in esophageal adenocarcinoma",
@@ -39,6 +40,73 @@
     "key_findings": "Cross-modality attention network reduced staging errors versus radiologist assessment by 18%.",
     "access_type": "restricted",
     "source": "pubmed",
-    "link": "https://example.org/doi/10.1016/j.radonc.2021.04.015"
+    "link": "https://example.org/doi/10.1016/j.radonc.2021.04.015",
+    "citations": 203
+  },
+  {
+    "title": "Biomechanics-informed radiomics for esophageal wall infiltration assessment",
+    "authors": [
+      "Rossi F",
+      "Kim S",
+      "Zhao X"
+    ],
+    "year": 2020,
+    "journal": "Annals of Biomedical Engineering",
+    "doi": "10.1007/s10439-020-02567-4",
+    "study_type": "Translational engineering study",
+    "sample_size": "n=64",
+    "imaging_modality": [
+      "CT",
+      "Endoscopic ultrasound"
+    ],
+    "key_findings": "Coupling finite-element deformation priors with CT radiomics enhanced invasion depth estimation.",
+    "access_type": "restricted",
+    "source": "pubmed",
+    "link": "https://example.org/doi/10.1007/s10439-020-02567-4",
+    "citations": 167
+  },
+  {
+    "title": "Quantitative diffusion MRI biomarkers for adaptive chemoradiotherapy in esophageal cancer",
+    "authors": [
+      "Miller T",
+      "Amano H",
+      "Wu Y"
+    ],
+    "year": 2023,
+    "journal": "International Journal of Radiation Oncology Biology Physics",
+    "doi": "10.1016/j.ijrobp.2023.04.010",
+    "study_type": "Adaptive therapy trial",
+    "sample_size": "n=92",
+    "imaging_modality": [
+      "MRI",
+      "DWI"
+    ],
+    "key_findings": "Early diffusion coefficient shifts predicted locoregional control and guided adaptive boosting.",
+    "access_type": "restricted",
+    "source": "pubmed",
+    "link": "https://example.org/doi/10.1016/j.ijrobp.2023.04.010",
+    "citations": 84
+  },
+  {
+    "title": "Integrated PET/MR for immunotherapy response evaluation in metastatic esophageal cancer",
+    "authors": [
+      "Zhou L",
+      "Martins R",
+      "Nguyen T"
+    ],
+    "year": 2024,
+    "journal": "Journal of Nuclear Medicine",
+    "doi": "10.2967/jnumed.123.266999",
+    "study_type": "Immunotherapy imaging study",
+    "sample_size": "n=57",
+    "imaging_modality": [
+      "PET",
+      "MRI"
+    ],
+    "key_findings": "Hybrid metabolic-radiomic signatures anticipated immunotherapy benefit in 78% of responders.",
+    "access_type": "restricted",
+    "source": "pubmed",
+    "link": "https://example.org/doi/10.2967/jnumed.123.266999",
+    "citations": 61
   }
 ]

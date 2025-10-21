@@ -37,6 +37,7 @@ class Summarizer:
                     f"- 样本量：{item.sample_size}",
                     f"- 影像学：{'、'.join(item.imaging_modality)}",
                     f"- 主要发现：{item.key_findings}",
+                    f"- 引用次数：{item.citation_count}",
                     "",
                 ]
             )
@@ -80,6 +81,7 @@ class Summarizer:
                     f"样本量：{item.sample_size}",
                     f"影像学：{'、'.join(item.imaging_modality)}",
                     f"主要发现：{item.key_findings}",
+                    f"引用次数：{item.citation_count}",
                     "",
                 ]
             )

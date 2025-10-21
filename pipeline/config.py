@@ -31,6 +31,7 @@ class PipelineConfig:
     output_root: Path
     offline_mode: bool
     queries: List[QueryConfig]
+    iterations: int = 1
 
     @classmethod
     def from_path(cls, path: Path) -> "PipelineConfig":
@@ -53,6 +54,7 @@ class PipelineConfig:
             output_root=output_root,
             offline_mode=bool(payload.get("offline_mode", False)),
             queries=queries,
+            iterations=int(payload.get("iterations", 1)),
         )
 
     def iter_sources(self) -> Iterable[str]:

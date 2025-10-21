@@ -27,8 +27,10 @@ python -m pipeline.run --config configs/search.yml
 默认启用 `offline_mode`，使用 `resources/` 目录中的示例数据生成以下文件：
 
 - `D/计划/data/raw/<source>/<query>.json`：按数据源保存的原始元数据。
-- `D/计划/data/processed/literature_summary.csv`：标准化后的检索结果表。
+- `D/计划/data/processed/literature_summary.csv`：标准化后的检索结果表，新增引用次数字段。
 - `D/计划/文献自动总结.md`：根据元数据生成的 Markdown 摘要。
+- `D/计划/研究方案迭代日志.md`：展示 7 轮医工协同研究策略演化。
+- `D/计划/研究方案最终稿.md`：整合高引用文献、数据需求与分析路径的最终方案。
 - `D/计划/logs/search_history.csv`：记录每次查询的执行时间与条数。
 
 若要接入真实 API，请将 `configs/search.yml` 中的 `offline_mode` 设为 `false` 并扩展 `pipeline/` 下对应的数据源客户端以加入正式的网络请求逻辑。

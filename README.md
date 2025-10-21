@@ -22,7 +22,7 @@
    python -m pipeline.run --config configs/search.yml
    ```
 
-   命令会在仓库内复现 `D/计划` 下的示例输出（含 CSV、Markdown，以及运行时生成但不纳入版本控制的 Word 摘要）。
+   命令会在仓库内复现 `D/计划` 下的示例输出（含 CSV、Markdown、7 轮迭代日志，以及运行时生成但不纳入版本控制的 Word 摘要）。
 
 3. **指向 Windows 本地 `D:\计划` 目录**（如需在本地电脑运行并保持目录结构）：
 
@@ -56,5 +56,12 @@
   ```bash
   python -m pipeline.run --config configs/search.yml
   ```
+
+- 生成的关键成果包括：
+
+  - `data/processed/literature_summary.csv`：带引用次数的归一化结果；
+  - `文献自动总结.md` 与 `文献自动总结.docx`：摘要；
+  - `研究方案迭代日志.md`：7 轮医工融合研究策略迭代记录；
+  - `研究方案最终稿.md`：基于高引用文献形成的定稿研究方案。
 
 欢迎在 `docs/` 目录下补充更多研究笔记或扩展真实爬虫脚本时的注意事项，以便团队协同使用。

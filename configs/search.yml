@@ -1,6 +1,7 @@
 {
   "offline_mode": true,
   "output_root": "D/计划",
+  "iterations": 7,
   "queries": [
     {
       "name": "esophageal_imaging",

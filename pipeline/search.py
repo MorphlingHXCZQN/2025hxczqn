@@ -25,6 +25,7 @@ class SearchResult:
     access_type: str
     source: str
     link: str
+    citation_count: int = 0
 
     def unique_id(self) -> str:
         if self.doi:

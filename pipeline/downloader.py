@@ -54,6 +54,7 @@ class OutputManager:
                 r.access_type,
                 r.source,
                 r.link,
+                r.citation_count,
             ]
             for r in results
         ]
@@ -73,6 +74,7 @@ class OutputManager:
                     "access_type",
                     "source",
                     "link",
+                    "citations",
                 ]
             )
             writer.writerows(rows)
@@ -104,4 +106,5 @@ class OutputManager:
             "access_type": item.access_type,
             "source": item.source,
             "link": item.link,
+            "citations": item.citation_count,
         }

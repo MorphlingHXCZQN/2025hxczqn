@@ -40,6 +40,7 @@ class GoogleScholarClient(BaseClient):
                 access_type=record.get("access_type", "unknown"),
                 source=self.source_name,
                 link=record.get("link", ""),
+                citation_count=int(record.get("citations", 0)),
             )
 
     def _load_stub(self) -> dict:
