@@ -6,9 +6,12 @@
 
 1. 联网环境下执行：
    ```bash
-   python tools/sci_citation_crawler.py "serum TDP-43 sepsis" --rows 25 --format markdown --output data/cached_serum_tdp43_sepsis_crossref.json
+   python tools/sci_citation_crawler.py \
+       "serum TDP-43 sepsis" \
+       --rows 25 \
+       --save-cache data/cached_serum_tdp43_sepsis_crossref.json
    ```
-   或使用 `--format csv` 获取表格文件。
+   如需直接查看表格，可额外添加 `--format markdown --output ...` 或使用 `--format csv`。
 2. 将生成的 `data/cached_serum_tdp43_sepsis_crossref.json` 文件复制至无法联网的环境，并在运行 `tools/literature_pipeline.py` 时通过 `--cache` 参数引用。
 3. 文献下载、摘要与 Word 导出文件会保存在仓库根目录下的 `outputs/` 目录（参见该目录下的 README），可根据需要备份或清理。
 

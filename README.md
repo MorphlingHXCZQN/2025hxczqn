@@ -6,14 +6,14 @@
 - `plans/imaging_phd_plan.md`：面向胶质瘤影像-多组学精准诊疗的医学影像博士研究计划。
 - `plans/serum_tdp43_sepsis_project.md`：血清 TDP-43 在脓毒症脑损伤预后预测中的双版本（动物/临床）研究方案。
 - `tools/plan_optimizer.py`：结合 DuckDuckGo 检索与 OpenAI GPT 模型，对研究计划持续优化的命令行脚本。
-- `tools/sci_citation_crawler.py`：抓取与筛选血清 TDP-43 / SAE 相关高引用 SCI 文献，输出 Markdown/CSV 表格。
+- `tools/sci_citation_crawler.py`：抓取与筛选血清 TDP-43 / SAE 相关高引用 SCI 文献，支持 Markdown/CSV 表格、全文下载与 Word 汇总。
 - `tools/literature_pipeline.py`：基于缓存或在线检索，自动完成文献下载、摘要、创新点提取；如需 Word 导出可显式指定输出路径。
 
 ## 快速开始
 
 1. 安装依赖：
    ```bash
-   pip install openai requests
+   pip install openai requests python-docx
    ```
 2. 配置 OpenAI API Key：
    ```bash
@@ -52,9 +52,25 @@ python tools/plan_optimizer.py \
 
 ## 高引用文献抓取与计划迭代
 
-1. **抓取文献列表**（联网环境）：
+1. **抓取文献列表与全文**（联网环境）：
    ```bash
-   python tools/sci_citation_crawler.py "serum TDP-43 sepsis" --rows 20 --format markdown --output data/cached_serum_tdp43_sepsis_crossref.json
+   python tools/sci_citation_crawler.py \
+       "serum TDP-43 sepsis" \
+       --rows 30 \
+       --recent-years 5 \
+       --attempt-fulltext \
+       --word-output outputs/tdp43_recent_literature.docx \
+       --output outputs/tdp43_recent_literature.md
+   ```
+   运行后会：
+   - 优先抓取近 5 年内高引用文章；
+   - 下载可公开访问的 PDF/HTML 原文（保存至 `outputs/literature/fulltext/`）；
+   - 若无法获取全文，则保留 Crossref 摘要并写入 Word 报告；
+   - 同时生成 Markdown 表格，可直接纳入研究计划。
+
+   若只需缓存元数据，可改用：
+   ```bash
+   python tools/sci_citation_crawler.py "serum TDP-43 sepsis" --rows 25 --format markdown --save-cache data/cached_serum_tdp43_sepsis_crossref.json
    ```
    生成的缓存文件可拷贝至离线环境使用。
 2. **运行文献迭代管线**：
